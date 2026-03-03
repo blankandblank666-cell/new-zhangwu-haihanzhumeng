@@ -1,0 +1,129 @@
+/* 1. @import 必须放第一行！ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap'); /* 加个中文字体更像哈佛 */
+
+/* 2. 然后才是 Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 3. 自定义样式 */
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  min-height: 100%;
+}
+
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 哈佛风字体定义 */
+.font-serif {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif; /* 英文用Playfair，中文用Noto */
+}
+
+/* 隐藏原本丑陋的滑块，完全交给自定义样式 */
+/* 1. 针对 Webkit 浏览器 (Chrome/Edge/Safari) */
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px; /* 给它一点宽度，更容易点中 */
+    height: 100%; /* 高度铺满，保证哪里都能拖 */
+    background: transparent; 
+    cursor: ew-resize;
+    /* !!! 绝对不能加 pointer-events: none !!! */
+  }
+  
+  /* 2. 针对 Firefox */
+  input[type=range]::-moz-range-thumb {
+    width: 20px;
+    height: 100%;
+    background: transparent;
+    cursor: ew-resize;
+    border: none;
+  }
+  
+  /* 3. 去掉点击时的聚焦黑框 */
+  input[type=range]:focus {
+    outline: none;
+  }
+
+/* =========================================
+   新增：治沙人物详情页 Z字型图文排版样式
+   ========================================= */
+
+/* Z字排版容器的基础样式 */
+.z-row {
+  display: flex;
+  align-items: center; /* 让图文垂直居中对齐 */
+  gap: 40px; /* 图片和文字之间的间距 */
+  margin-bottom: 50px; /* 每组图文之间的间距 */
+}
+
+/* 翻转样式：实现左文右图 */
+.z-row.reverse {
+  flex-direction: row-reverse;
+}
+
+/* 图片区域样式 */
+.z-image {
+  flex: 1; /* 图片和文字各占 50% 宽度 */
+  display: flex;
+  flex-direction: column;
+}
+
+.z-image img {
+  width: 100%;
+  border-radius: 8px; /* 给图片加一点圆角，更现代 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 添加柔和的阴影 */
+  object-fit: cover;
+}
+
+/* 图片底部的灰色小字图注 */
+.img-caption {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+  font-family: 'Noto Serif SC', serif; /* 继承你的哈佛风中文字体 */
+}
+
+/* 文字区域样式 */
+.z-text {
+  flex: 1;
+}
+
+.z-text p {
+  line-height: 1.8;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: justify; /* 让文字两端对齐，版面更整齐 */
+}
+
+/* 手机端适配：屏幕变小时，全部变成上图下文 */
+@media (max-width: 768px) {
+  .z-row, .z-row.reverse {
+    flex-direction: column;
+    gap: 20px; /* 手机端减小图文间距 */
+  }
+  .z-image {
+    width: 100%; /* 手机端图片撑满 */
+  }
+}
